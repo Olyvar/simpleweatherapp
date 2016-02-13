@@ -1,0 +1,30 @@
+<div ng-controller="HomeController" class="row">
+    <div class="col-md-12">
+
+        <!--<div ng-show="weatherData">-->
+        <!--<h3 class="m-b-2">What's the weather like in {{ city }}?</h3>-->
+        <!--<p><strong>Weather:</strong> {{ weatherData.main }}</p>-->
+        <!--<p><strong>More info:</strong> {{ weatherData.description }}</p>-->
+        <!--<p><strong>Temperature:</strong> {{ temperature }}</p>-->
+        <!--</div>-->
+
+        <h1 class="m-b-2">{{ greeting }}</h1>
+        <div class="row">
+            <form ng-submit="startSearch()" class="form-horizontal">
+                <div class="col-md-6">
+                    <input type="text" ng-model="city" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <select name="" id="" ng-model="selectedDay" class="form-control">
+                        <option ng-repeat="day in days" value="{{ day }}">{{ day }} day forecast</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <input class="btn btn-primary" type="submit" value="SEARCH"/>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
