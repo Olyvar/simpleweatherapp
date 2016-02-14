@@ -1,32 +1,21 @@
-<div ng-controller="ForecastController" class="row">
-    <div class="col-md-12">
+<div ng-controller="ForecastController">
 
-        <!--<div ng-show="weatherData">-->
-        <!--<h3 class="m-b-2">What's the weather like in {{ city }}?</h3>-->
-        <!--<p><strong>Weather:</strong> {{ weatherData.main }}</p>-->
-        <!--<p><strong>More info:</strong> {{ weatherData.description }}</p>-->
-        <!--<p><strong>Temperature:</strong> {{ temperature }}</p>-->
-    <!--</div>-->
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="m-b-2">Forecast for {{ city }}</h1>
 
-        <h1 class="m-b-2">Forecast for {{ city }}</h1>
-            <div class="row">
-            <div class="col-md-4" ng-repeat="w in weatherResult.list">
-                <div class="card">
-                    <div class="card-block">
-                        <h3 class="card-title">{{ w.dt }}</h3>
-                        <h6 class="card-subtitle text-muted">Daytime temperature: {{ w.main.temp }}</h6>
-                    </div>
-                </div>
+            <div class="m-b-2">
+                <a ng-class="{'bg-primary': days === '2'}" href="#/forecast/2">2 Days</a> | <a ng-class="{'bg-primary': days === '5'}" href="#/forecast/5">5 Days</a> | <a ng-class="{'bg-primary': days === '7'}" href="#/forecast/7">7 Days</a></div>
             </div>
-            </div>
-            <p><a class="btn btn-primary" href="#/home">Search again?</a></p>
-            </div>
+        </div>
+    </div>
 
-
-
-        <!--<div ng-hide="weatherData" class="alert alert-info">-->
-            <!--<p>No forecast has been searched. <a href="#/home">Go search one, silly!</a></p>-->
-        <!--</div>-->
+    <div class="row">
+        <div class="col-md-4" ng-repeat="w in weatherResult.list">
+            <weather-component weather-day="w" convert-to-standard="convertToCelsius(temp)" convert-to-date="convertToDate(dt)" date-format="MMM d, y"></weather-component>
+        </div>
+    </div>
+    <p><a class="btn btn-primary" href="#/home">Search again?</a></p>
 
     </div>
 </div>
