@@ -2,11 +2,23 @@
 var weatherApp = angular.module('weatherApp', ['ngRoute', 'ngResource']);
 
 // CONTROLLERS
-weatherApp.controller('HomeController', ['$scope', 'cityService', '$location', 'daysService', function($scope, cityService, $location, daysService){
+weatherApp.controller('HomeController', ['$scope', '$filter', 'cityService', '$location', 'daysService', '$timeout', function($scope, $filter, cityService, $location, daysService, $timeout){
     $scope.greeting = "Olly's weather app!";
     $scope.days = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
     $scope.selectedDay = $scope.days[0];
     $scope.city = cityService.city;
+
+    $scope.myName = "Olly"
+    $scope.characters = 5;
+
+   $timeout(function(){
+        console.log("changed");
+        $scope.myName = "Changed";
+    }, 3000);
+
+    $scope.convertToLowercase = function(){
+        return $filter("lowercase")($scope.myName);
+    }
 
     $scope.submit = function(){
         $location.path('/forecast/' + $scope.selectedDay)
@@ -44,7 +56,62 @@ weatherApp.controller('ForecastController', ['$scope', '$resource', '$routeParam
 
 }]);
 
+weatherApp.controller('UsersController', ['$scope', 'usersService', function($scope, usersService){
+
+    $scope.users = usersService.query();
+
+    $scope.removeUser = function(userId){
+        usersService.removeUser({user: userId}).$promise.then(function(){
+            var index = _.findIndex($scope.users, { "id": userId });
+            $scope.users.splice(index, 1);
+        });
+
+    };
+    
+    $scope.editUser = function(userId, name, email){
+        usersService.editUser({user: userId},{name: name, email: email})
+    }
+
+    $scope.addUser = function(name, email){
+        usersService.save({name: name, email: email}).$promise.then(function(data){
+            $scope.users.push({id: data.id, name: data.name, email: data.name})
+        });
+    }
+
+    $scope.editMode = false;
+
+    $scope.activateEditMode = function(){
+        if($scope.editMode != true){
+            $scope.editMode = true;
+        } else {
+            $scope.editMode = false;
+        }
+    }
+
+
+
+}])
+
 // SERVICES
+
+weatherApp.service('usersService', ["$resource", function($resource){
+
+    return $resource('http://localhost:3000/users/:user',{user: "@user"}, {
+        get: {isArray: false},
+        refresh: {
+            method: 'GET',
+            isArray: true
+        },
+        removeUser:{
+            method:'DELETE'
+        },
+        editUser:{
+            method:'PATCH'
+        }
+    });
+
+}]);
+
 weatherApp.service('cityService',[function() {
 
     this.city = "London";
@@ -72,6 +139,10 @@ function($routeProvider){
     when('/forecast/:days', {
         templateUrl: 'pages/forecast.htm',
         controller: 'ForecastController',
+    }).
+        when('/users', {
+        templateUrl: 'pages/users.html',
+        controller: 'UsersController'
     }).
         otherwise({
         redirectTo: '/home'

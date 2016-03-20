@@ -1,0 +1,24 @@
+<div ng-controller="UsersController">
+
+    <div class="col-md-8 col-md-offset-2 m-b-2">
+        <a class="btn btn-info-outline btn-block" ng-click="activateEditMode()">{{ editMode ? "Exit Edit Mode" : "Enter Edit Mode" }}</a>
+    </div>
+    <div ng-show="editMode" class="m-b-2 row">
+        <div class="col-md-4"><input type="text" ng-model="newName"></div>
+        <div class="col-md-4"><input type="text" ng-model="newEmail"></div>
+        <div class="col-md-4"><button class="btn btn-primary btn-primary-outline" ng-click="addUser( newName, newEmail )">Add User</button></div>
+    </div>
+    <table class="table table-striped">
+        <th>Name</th><th>Email Address</th><th></th>
+
+        <tr ng-repeat="user in users">
+            <td><input ng-show="editMode" type="text" ng-model="user.name">{{ editMode ? "" : user.name }}</td>
+            <td><input ng-show="editMode" type="text" ng-model="user.email">{{ editMode ? "" : user.email }}</td>
+            <td>
+                <button ng-show="editMode" class="btn btn-info" ng-click="editUser( user.id, user.name, user.email )">Edit User</button>
+                <button ng-show="editMode" class="btn btn-danger" ng-click="removeUser( user.id )">Delete</button>
+            </td>
+        </tr>
+    </table>
+
+</div>
