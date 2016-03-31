@@ -19,7 +19,7 @@ weatherApp.config(['$routeProvider',
         }).
             when('/users/:user',{
             templateUrl: 'pages/user.htm',
-            controller: 'UsersController'
+            controller: 'UserController'
         }).
         when('/postInfo', {
             templateUrl: 'pages/userPosts.htm',

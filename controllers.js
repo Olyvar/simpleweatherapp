@@ -70,10 +70,6 @@ weatherApp.controller('UsersController', ['$scope', 'usersService', 'postsServic
 
     $scope.editMode = false;
 
-    $scope.user = usersService.getId({user: $routeParams.user});
-
-    console.log($routeParams.user)
-
     $scope.activateEditMode = function(){
         if($scope.editMode != true){
             $scope.editMode = true;
@@ -86,6 +82,12 @@ weatherApp.controller('UsersController', ['$scope', 'usersService', 'postsServic
         postsService.currentUserId = userId;
         $location.path('/postInfo/');
     }
+
+}]);
+
+weatherApp.controller('UserController', ['$scope', 'usersService', '$routeParams', function($scope, usersService, $routeParams){
+
+    $scope.user = usersService.get({user: $routeParams.user});
 
 }]);
 

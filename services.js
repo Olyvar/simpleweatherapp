@@ -2,9 +2,6 @@ weatherApp.service('usersService', ["$resource", function($resource){
 
     return $resource('http://localhost:3000/users/:user',{user: "@user"}, {
         get: {isArray: false},
-        getId: {
-          method: 'GET'
-        },
         refresh: {
             method: 'GET',
             isArray: true
