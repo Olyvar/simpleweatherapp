@@ -1,0 +1,4 @@
+<div ng-repeat="person in people | filter : {'active': true}">
+<play-component person-name="{{ person.name }}" person-hobbies="{{ person.hobbies }}"></play-component>
+</div>
+

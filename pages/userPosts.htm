@@ -1,0 +1,13 @@
+<div ng-controller="PostsController">
+
+    <div ng-repeat="post in currentUserPosts">
+    <div class="card">
+        <div class="card-block">
+            <h3 class="card-title">{{ post.title }}</h3>
+            <h6 class="card-subtitle text-muted">{{ post.body }}</h6>
+        </div>
+    </div>
+    </div>
+
+
+</div>
